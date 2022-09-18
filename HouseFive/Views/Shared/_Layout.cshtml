@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <!-- Bootstrap CSS -->
+    <title>@ViewData["Title"] | Дом 5/1</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/ckeditor5/assets/content-styles.css" type="text/css">
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <meta property="og:title" content="Дом 5/1" />
+    <meta property="og:image" content="~/buildings.png" />
+    <meta property="og:description" content="Уважаемые соседи! В нашем Доме мы хотим жить дружно, уважать соседей и наслаждаться комфортной жизнью в ЖК каждый день." />
+
+    <link rel="icon" href="~/buildings.png" />
+
+    <meta name="description" content="Уважаемые соседи! В нашем Доме мы хотим жить дружно, уважать соседей и наслаждаться комфортной жизнью в ЖК каждый день." />
+
+    <title>Привет мир!</title>
+</head>
+<body class=" min-vh-100 d-flex flex-column">
+    @Html.Partial("~/Views/Partials/_GetHeader.cshtml")
+    <main class=" flex-grow-1">
+        @RenderBody()
+    </main>
+    @Html.Partial("~/Views/Partials/_GetFooter.cshtml")
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

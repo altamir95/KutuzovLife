@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Контакты";
+    KeyValue keyValue = ViewBag.Contacts;
+}
+
+@await Html.PartialAsync("~/Views/Partials/_GetTitleDiv.cshtml", new List<string> { "/title/123456.jpg", "Контакты" })
+
+<div class="container-fluid " style="margin-top:80px;">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-10 col-lg-8 col-xl-7 my-6">
+            @await Html.PartialAsync("~/Views/Partials/_GetBreadcrumb.cshtml", new KeyValue[]{ new KeyValue() { Key= "/Контакты", Value="Контакты"} })
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="centered">
+                    <div class="row row-editor">
+                        <div class="editor-container">
+                            <div class="editor rounded-3 border-secondary" id="editor" style="border-style:dashed;" oninput="updatingIdInput()">
+                                @Html.Raw(keyValue.Value)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form asp-action="Change" asp-controller="Contacts" method="post">
+                    <input type="hidden" name="Value" id="idinputarticle" value="" />
+                    <div class="d-grid gap-2 mt-4">
+                        <input onclick="updatingIdInput()" class="btn btn-primary" value="Сохранить" type="submit" />
+                    </div>
+                </form>
+            }
+            else
+            {
+                <div class="ck-content ck-content-mh">@Html.Raw(keyValue.Value)</div>
+            }
+
+        </div>
+    </div>
+</div>
+<script src="/lib/ckeditor5/build/ckeditor.js"></script>
+<script>
+    BalloonEditor
+        .create(document.querySelector('.editor'), {
+
+            toolbar: {
+                items: [
+                    'heading',
+                    '|',
+                    'bold',
+                    'italic',
+                    'underline',
+                    'link',
+                    'bulletedList',
+                    'numberedList',
+                    'todoList',
+                    'alignment',
+                    'fontSize',
+                    'fontBackgroundColor',
+                    'fontColor',
+                    'fontFamily',
+                    '|',
+                    'horizontalLine',
+                    'outdent',
+                    'indent',
+                    '|',
+                    'findAndReplace',
+                    'imageUpload',
+                    'blockQuote',
+                    'insertTable',
+                    'htmlEmbed',
+                    'mediaEmbed',
+                    'undo',
+                    'redo',
+                    'specialCharacters'
+                ]
+            },
+            ckfinder: {
+                uploadUrl: '/File/UploadImage'
+            },
+            language: 'ru',
+            image: {
+                toolbar: [
+                    'imageTextAlternative',
+                    'imageStyle:inline',
+                    'imageStyle:block',
+                    'imageStyle:side'
+                ]
+            },
+            table: {
+                contentToolbar: [
+                    'tableColumn',
+                    'tableRow',
+                    'mergeTableCells',
+                    'tableCellProperties',
+                    'tableProperties'
+                ]
+            },
+            licenseKey: '',
+
+
+
+        })
+        .then(editor => {
+            window.editor = editor;
+            let idInput = document.getElementById("idinputarticle");
+            idInput.value = window.editor.getData();
+        })
+        .catch(error => {
+            console.error('Oops, something went wrong!');
+            console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
+            console.warn('Build id: 3r8z6kj8noy2-tvw6u5olsxv3');
+            console.error(error);
+        });
+
+    function updatingIdInput() {
+        let idInput = document.getElementById("idinputarticle");
+        idInput.value = window.editor.getData();
+        console.log(window.editor.getData());
+    }
+
+</script>

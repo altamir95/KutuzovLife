@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Добро пожаловать!";
+}
+@await Html.PartialAsync("~/Views/Partials/_GetTitleDiv.cshtml", new List<string> { "title/1234.jpg", "Совет Дома 5/1" })
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-8 col-lg-7 col-xl-6">
+            <p class="display-6 text-uppercase">Уважаемые соседи 1 корпуса</p>
+            <p>Мы надеемся, что мы с вами наслаждаемся жизнью в нашем доме в ЖК "КУТУЗОВСКИЙ LIFE"!</p>
+            <p>И мы хотим, чтобы наша жизнь строилась на взаимном уважении, и все вопросы по обеспечению комфортного проживания решались ОПЕРАТИВНО.</p>
+            <p>Уже в начале 2020 года наш корпус начал заселяться, и за этот год собралась группа наших соседей, которые готовы активно  участвовать в жизни нашего дома и оказывать помощь в решение вопросов и взаимодействовать с УК.</p>
+            <p>Несколько человек из наших активистов готовы войти в Совет Дома, и этих кандидатов мы выдвинули в текущем ОСС.</p>
+            <p>Совет Дома будет избран на 2 года, но участники могут меняться и назначаться опять же через голосование.</p>
+            <p>Работа участников Совета является безвозмездной.</p>
+            <p>Представляем вам кандидатов (в рамках ОСС, проведенного в настоящий момент) состав Совета Дома:</p>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="text-center mt-4 d-grid gap-2">
+                    <button class="btn btn-outline-success btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Добавить советчика
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body alert alert-success shadow-lg ">
+                        @await Html.PartialAsync("~/Views/Partials/_GetHomeAdviser.cshtml", new HouseAdviser())
+                    </div>
+                </div>
+            }
+
+            @foreach (HouseAdviser item in ViewBag.HouseAdvisers)
+            {
+                @await Html.PartialAsync("~/Views/Partials/_GetHomeAdviser.cshtml", item);
+            }
+        </div>
+    </div>
+</div>

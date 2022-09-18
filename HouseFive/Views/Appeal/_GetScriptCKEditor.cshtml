@@ -1,0 +1,96 @@
+﻿<script src="/lib/ckeditor5v2/build/ckeditor.js"></script>
+<script>
+    ClassicEditor.create(document.querySelector(".editor"), {
+        toolbar: {
+            items: ["heading", "bold", "italic", "link", "highlight", "|", "blockQuote", "bulletedList", "numberedList", "todoList", "alignment", "|", "imageUpload", "insertTable", "mediaEmbed", "|", "undo", "redo"],
+        },
+        language: "ru",
+        image: {
+            toolbar: ["imageTextAlternative", "imageStyle:inline", "imageStyle:block", "imageStyle:side", "linkImage"],
+        },
+        ckfinder: {
+            uploadUrl: '/File/UploadImage'
+        },
+        table: {
+            contentToolbar: ["tableColumn", "tableRow", "mergeTableCells", "tableCellProperties", "tableProperties"],
+        },
+        licenseKey: "",
+    })
+        .then((editor) => {
+            window.editor = editor;
+            let idInput = document.getElementById("exampleFormControlInputArticle");
+            idInput.value = window.editor.getData();
+        })
+        .catch((error) => {
+            console.error("Oops, something went wrong!");
+            console.error("Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:");
+            console.warn("Build id: b7adn3knli83-ktxlj3xmied2");
+            console.error(error);
+        });
+
+
+    function updatingIdInput() {
+        let idInput = document.getElementById("exampleFormControlInputArticle");
+        idInput.value = window.editor.getData();
+        console.log(window.editor.getData());
+    }
+
+
+
+
+
+    function focusModel(requestResult) {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+            keyboard: false
+        })
+        const localStorageItem = localStorage.getItem('coupon');
+
+
+        var request = new XMLHttpRequest();
+        var body = "?code=" + localStorageItem;
+        request.open("GET", "/ApiGet/Coupon" + body);
+        request.onload = () => {
+            if (request.responseText == "true") {
+                myModal.toggle()
+                return;
+            } else {
+                localStorage.setItem('coupon', "");
+                focusModelTwo()
+            }
+        }
+        request.send()
+    }
+
+    function focusModelTwo() {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
+            keyboard: false
+        })
+
+        var result = window.prompt("Введите кодовое слово", "");
+        if (result == null) {
+
+            return;
+        }
+
+        var request = new XMLHttpRequest();
+
+        var body = "?code=" + result;
+
+        request.open("GET", "/ApiGet/Coupon" + body);
+        request.onload = () => {
+            if (request.responseText == "true") {
+                localStorage.setItem('coupon', result);
+                myModal.toggle()
+                return;
+            } else {
+                focusModelTwo();
+
+            }
+        }
+        request.send()
+    }
+
+
+</script>
+<script>
+</script>

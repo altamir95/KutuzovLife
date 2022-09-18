@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Протоколы встреч с упровляющей организацией";
+    double pageCount = ViewBag.PageCount;
+    List<MeetingMinutes> items = ViewBag.MeetingMinutes;
+    int itemsCount = items.Count();
+}
+@await Html.PartialAsync("~/Views/Partials/_GetTitleDiv.cshtml", new List<string> { "/title/123.jpg", "Протоколы встреч с упровляющей организацией" })
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-7 col-xl-8">
+            @await Html.PartialAsync("~/Views/Partials/_GetBreadcrumb.cshtml", new KeyValue[] { new KeyValue() { Key = "/протоколыВстреч", Value = "Протоколы встреч" } })
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p class="text-center mt-4 d-grid gap-2">
+                    <button class="btn btn-outline-success btn-lg" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                        Добавить протокол
+                    </button>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body alert alert-success shadow-lg">
+                        @await Html.PartialAsync("~/Views/Partials/_GetMeetingMinute.cshtml", new MeetingMinutes() { Title = DateTime.Now })
+                    </div>
+                </div>
+            }
+            @if (itemsCount < 1)
+            {
+                <p class="display-1 text-uppercase text-danger text-center">Пусто</p>
+            }
+            @foreach (MeetingMinutes item in ViewBag.MeetingMinutes)
+            {
+                <div class="mt-4 rounded-3 shadow-lg bg-light p-1 p-sm-1 p-lg-4 p-md-4 p-xl-4">
+                    @await Html.PartialAsync("~/Views/Partials/_GetMeetingMinute.cshtml", item)
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="MeetingMinute" asp-action="Delete" method="post">
+                            @Html.Hidden("Id", item.Id)
+                            <div class="d-grid gap-2 mt-2">
+                                <input type="submit" class="btn btn-danger" value="Удалить" />
+                            </div>
+                        </form>
+                    }
+                </div>
+
+            }
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Partials/_GetPagination.cshtml", pageCount)

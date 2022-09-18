@@ -1,0 +1,83 @@
+﻿@{
+    ViewData["Title"] = "Инициативы";
+    double pageCount = ViewBag.PageCount;
+    List<Initiative> initiatives = ViewBag.Initiatives;
+    List<Appeal> appeals = ViewBag.Appeals;
+    int initiativesCount = initiatives.Count();
+}
+@await Html.PartialAsync("~/Views/Partials/_GetTitleDiv.cshtml", new List<string> { "/title/12.jpg", "Инициативы" })
+
+<script src="/lib/ckeditor5/build/ckeditor.js"></script>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            @await Html.PartialAsync("~/Views/Partials/_GetBreadcrumb.cshtml", new KeyValue[] { new KeyValue() { Key = "/Инициативы", Value = "Инициативы" } })
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="d-flex justify-content-center align-items-center p-2 fixed-bottom bg-secondary">
+                    <a class="btn btn-success btn-sm " asp-controller="Initiative" asp-action="Item" asp-route-id="0">
+                        Добавить инициативу
+                    </a>
+                </div>
+
+                @*<div class="collapse" id="collapseExample">
+                        <div class="card card-body alert alert-success shadow-lg ">
+                            @await Html.PartialAsync("~/Views/Partials/_GetInitiative.cshtml", new Initiative())
+                        </div>
+                    </div>*@
+            }
+            @if (initiativesCount < 1)
+            {
+                <p class="display-1 text-uppercase text-danger text-center">Пусто</p>
+            }
+            @foreach (Initiative item in ViewBag.Initiatives)
+            {
+                <div class=" rounded-3 shadow-lg p-3 my-4 border border-1">
+                    <p class="text-black-50 m-0 text-end ">№@item.Id</p>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="alert alert-primary">
+                            <form asp-controller="Initiative" asp-action="Delete" ac method="post">
+                                @Html.Hidden("Id", item.Id)
+                                <div class="d-grid gap-2">
+                                    <input type="submit" class="btn btn-danger rounded-pill" value="Удалить инициативу" />
+                                </div>
+                            </form>
+                            <hr class="my-2" />
+                            <form asp-controller="Initiative" asp-action="Change" method="post" class="">
+                                @Html.Hidden("InitiativeId", item.Id)
+
+                                <div class="input-group  ">
+                                    <select name="AppealId" class="form-select rounded-pill" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option>С обращением не связанно</option>
+                                        @foreach (Appeal itemAppeal in appeals)
+                                        {
+                                            bool isSelected = item.InitiativeAppeal == null ? false : itemAppeal.Id == item.InitiativeAppeal.AppealId;
+
+                                            <option selected="@isSelected" value="@itemAppeal.Id">№@itemAppeal.Id | @itemAppeal.Title</option>
+
+                                        }
+                                    </select>
+                                    <input type="submit" class="btn btn-primary rounded-pill ms-2" value="Связать" />
+                                </div>
+                            </form>
+                        </div>
+                    }
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        if (item.InitiativeAppeal != null)
+                        {
+                            <a class="my-right-arrow text-decoration-none" asp-controller="Redirector" asp-action="ToAppeal" asp-route-id="@item.InitiativeAppeal.AppealId">
+                                По обращению <span class="my-mini-number">№@item.InitiativeAppeal.AppealId</span>
+                            </a>
+                        }
+                    }
+                    @await Html.PartialAsync("~/Views/Partials/_GetInitiative.cshtml", item)
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Partials/_GetPagination.cshtml", pageCount)
+

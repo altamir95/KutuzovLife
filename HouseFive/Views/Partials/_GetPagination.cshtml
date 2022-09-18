@@ -1,0 +1,48 @@
+﻿@model double
+@{ 
+    int currentPage = Int32.Parse((string)ViewContext.RouteData.Values["page"]);
+    int prevPage = --currentPage;
+    int nextPage = ++currentPage;
+
+    var controller = ViewContext.RouteData.Values["controller"].ToString();
+    var action = ViewContext.RouteData.Values["action"].ToString();
+
+    var pages = new int[]{
+        currentPage - 2,
+        currentPage - 1,
+        currentPage ,
+        currentPage + 1,
+        currentPage + 2,
+    };
+}
+<nav aria-label="Page navigation example">
+    <ul class="pagination pagination-sm justify-content-center  my-5">
+        @if (pages[1] > 0)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="@controller" asp-action="@action" asp-route-page="@pages[1]" aria-label="Previous">
+                    <span aria-hidden="true">&lang;</span>
+                </a>
+            </li>
+        }
+
+        @foreach (var pageNum in pages)
+        {
+            if (pageNum > 0&&pageNum<= Model)
+            {
+
+                <li class="page-item @(pageNum==currentPage?"active":"")"><a class="page-link" asp-controller="@controller" asp-action="@action" asp-route-page="@pageNum">@pageNum</a></li>
+            }
+
+        }
+        @if (Model > currentPage)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="@controller" asp-action="@action" asp-route-page="@pages[3]" aria-label="Next">
+                    <span aria-hidden="true">&rang;</span>
+                </a>
+            </li>
+        }
+
+    </ul> 
+</nav>  

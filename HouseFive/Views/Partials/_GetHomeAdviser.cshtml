@@ -1,0 +1,65 @@
+﻿@model HouseFive.Models.HouseAdviser
+@{ 
+    var classAlert = Model.Id!=0 && User.Identity.IsAuthenticated ? " alert alert-dark shadow-lg" : "";
+    var saveOrAdd = Model.Id == 0 ? "Добавить" : "Сохранить";
+}
+<div class="mt-4  @classAlert">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form asp-action="Index" asp-controller="Home" method="post" enctype="multipart/form-data">
+            @Html.Hidden("Id", @Model.Id)
+            <div class="mb-3">
+                <label for="formFile" class="form-label">Портрет</label>
+                <input class="form-control" type="file" id="formFile" name="Avatar" value="@Model.ImgURl">
+            </div>
+            <div class="mb-3">
+                <label for="Name-@Model.Id" class="form-label">Имя</label>
+                <input type="text" class="form-control" id="Name-@Model.Id" name="FirstName" value="@Model.FirstName" required>
+            </div>
+            <div class="mb-3">
+                <label for="Name-@Model.Id" class="form-label">Фамилия</label>
+                <input type="text" class="form-control" id="Name-@Model.Id" name="LastName" value="@Model.LastName" required>
+            </div>
+            <div class="mb-3">
+                <label for="Position-@Model.Id" class="form-label">Должнасть</label>
+                <textarea class="form-control" id="Position-@Model.Id" rows="3" name="Position" required>@Model.Position</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="Quote-@Model.Id" class="form-label">Цитата</label>
+                <textarea class="form-control" id="Quote-@Model.Id" rows="5" name="Quote" required>@Model.Quote</textarea>
+            </div>
+            <div class="d-grid gap-2">
+                <input type="submit" class="btn btn-primary" value="@saveOrAdd" />
+            </div>
+
+        </form>
+        @if (@Model.Id != 0)
+        {
+            <form asp-controller="Home" asp-action="Delete" method="post">
+                @Html.Hidden("Id", @Model.Id)
+                <div class="d-grid gap-2 mt-2">
+                    <input type="submit" class="btn btn-danger" value="Удалить" />
+                </div>
+            </form>
+        }
+
+    }
+    else
+    {
+        <hr>
+
+        <div class="w-50 mx-auto my-auto">
+            <div class="rounded-pill my-avatar shadow-lg" style="background-image: url(@Model.ImgURl)"></div>
+        </div>
+        <p class="display-4 text-center mb-4">@Model.FirstName @Model.LastName</p>
+
+        <figure class="text-center">
+            <blockquote class="blockquote">
+                <p>@Model.Position</p>
+            </blockquote>
+            <figcaption class="blockquote-footer">
+                <cite title="Source Title">@Model.Quote</cite>
+            </figcaption>
+        </figure>
+    }
+</div>

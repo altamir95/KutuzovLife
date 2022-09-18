@@ -1,0 +1,156 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+/*font-family: 'Oswald', sans-serif;*/
+.my-avatar {
+    background-size: cover;
+    background-position: 50%;
+    padding-top: 50%;
+    padding-bottom: 50%;
+}
+main{
+    margin-top:50px;
+}
+
+.blockquote-footer::before {
+    content: "" !important;
+}
+
+.title-div { 
+    background-size: cover;
+    background-position: 50%;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 900 !important;
+}
+
+    .title-div hr {
+        color: #212529 !important;
+        opacity: 1 !important;
+        border-radius: 5px;
+    }
+
+        .title-div hr:not([size]) {
+            height: 10px !important;
+        }
+
+.doc-url-conteiner iframe , .ck-content .raw-html-embed iframe {
+    width: 100% !important;
+    height: 350px !important;
+}
+
+@media (min-width: 576px) {
+    .doc-url-conteiner iframe , .ck-content .raw-html-embed iframe {
+        height: 350px !important;
+    }
+    .limiter {
+        max-height: 300px !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .doc-url-conteiner iframe , .ck-content .raw-html-embed iframe {
+        height: 350px !important;
+    }
+    .limiter {
+        max-height: 350px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .doc-url-conteiner iframe , .ck-content .raw-html-embed iframe {
+        height: 500px !important;
+    }
+    .limiter {
+        max-height: 500px !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .doc-url-conteiner iframe , .ck-content .raw-html-embed iframe {
+        height: 600px;
+    }
+    .limiter {
+        max-height: 600px !important;
+    }
+}
+
+@media (min-width: 1400px) {
+    .doc-url-conteiner iframe , .ck-content .raw-html-embed iframe {
+        height: 600px !important;
+    }
+    .limiter {
+        max-height: 600px !important;
+    }
+}
+
+/* Стили для текстового поля с кнопкой "Далее" */
+.limiter {
+    max-height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .limiter .bottom {
+        position: absolute;
+        bottom: 0;
+        background: linear-gradient( to bottom, rgb(255 255 255 / 0%), rgb(255 255 255)90%);
+        width: 100%;
+        height: 100px;
+        opacity: 1;
+        transition: 0.3s;
+    }
+
+.read-more-checker {
+    opacity: 0;
+    position: absolute;
+}
+
+    .read-more-checker:checked ~ .limiter {
+        max-height: none;
+    }
+
+        .read-more-checker:checked ~ .limiter .bottom {
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+    .read-more-checker ~ .read-more-button:before {
+        content: "Подробнее »";
+    }
+
+    .read-more-checker:checked ~ .read-more-button:before {
+        content: "Подробнее «";
+    }
+
+.read-more-button {
+    cursor: pointer;
+    display: inline-block;
+    color: #777;
+    text-decoration: underline;
+}
+
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff !important;
+    background-color: black;
+    border-color: black;
+}
+.page-item .page-link { 
+    color: black !important; 
+}
+.editor{
+    min-height:300px;
+}
+.myImg {
+    background-color: rgba(0, 0, 0, 0.529) !important;
+}
+.myBorderAdmin {
+    border: 4px dotted black;
+}
+.my-right-arrow::after {
+    /*content: "〉";*/
+    content: "❯";
+    font-size: 0.68rem;
+}
+.my-mini-number {
+    font-size: 0.7rem;
+}

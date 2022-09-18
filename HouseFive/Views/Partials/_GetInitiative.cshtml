@@ -1,0 +1,18 @@
+﻿@model HouseFive.Models.Initiative
+
+    <input type="checkbox" class="read-more-checker" id="read-more-checker" />
+    <div class="limiter mt-4">
+        <div class="ck-content">  @Html.Raw(Model.Article)</div>
+        <div class="bottom"></div>
+    </div>
+    <p class=" mt-0 d-grid gap-2    d-flex justify-content-end">
+
+    </p>
+    <p class=" mt-0 d-grid gap-2    d-flex justify-content-end">
+        <a class="btn btn-dark  rounded-pill text-uppercase" aria-current="page" asp-controller="Initiative" asp-action="Item" asp-route-id="@Model.Id">Подробнее &#10095;</a>
+    </p>
+   
+
+
+
+

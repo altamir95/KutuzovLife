@@ -1,0 +1,17 @@
+﻿@model Initiative
+<div class="centered">
+    <div class="row row-editor">
+        <div class="editor-container">
+            <div class="editor rounded-3 border-secondary" id="editor" style="border-style:dashed;"  oninput="updatingIdInput()">
+                @Html.Raw(Model.Article)
+            </div>
+        </div>
+    </div>
+</div>
+<form action="/Initiative/Item" method="post">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="Article" id="idinputarticle" value="" />
+    <div class="d-grid gap-2 mt-4">
+        <input onclick="updatingIdInput()" class="btn btn-primary" value="Сохранить" type="submit" /> 
+    </div>
+</form>

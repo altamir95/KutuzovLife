@@ -1,0 +1,11 @@
+﻿@model KeyValue[]
+<div aria-label="breadcrumb" class="mb-5">
+    <ol class="breadcrumb small">
+        <li class="breadcrumb-item"><a href=".">Главная</a></li>
+        @for (int i = 0; i < (Model.Length - 1); i++)
+        {
+            <li class="breadcrumb-item"><a href="@Model[i].Key">@Model[i].Value</a></li>
+        }
+        <li class="breadcrumb-item active" aria-current="page">@Model[(Model.Length - 1)].Value</li>
+    </ol>
+</div>

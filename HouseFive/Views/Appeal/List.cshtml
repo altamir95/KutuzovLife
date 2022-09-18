@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewData["Title"] = "Реестр обращений жителей";
+    double pageCount = ViewBag.PageCount;
+    List<Appeal> appeals = ViewBag.Appeals;
+    int itemsCount = appeals.Count();
+}
+@await Html.PartialAsync("~/Views/Partials/_GetTitleDiv.cshtml", new List<string> { "/title/12345.jpg", "Реестр обращений жителей" })
+
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+            @await Html.PartialAsync("~/Views/Partials/_GetBreadcrumb.cshtml", new KeyValue[] { new KeyValue() { Key = "/РеестрОбращенийЖителей", Value = "Реестр обращений жителей" } })
+
+            @*
+        ███████╗░█████╗░██████╗░███╗░░░███╗
+        ██╔════╝██╔══██╗██╔══██╗████╗░████║
+        █████╗░░██║░░██║██████╔╝██╔████╔██║
+        ██╔══╝░░██║░░██║██╔══██╗██║╚██╔╝██║
+        ██║░░░░░╚█████╔╝██║░░██║██║░╚═╝░██║
+        ╚═╝░░░░░░╚════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝
+            *@
+            <form method="post" asp-action="Change" asp-controller="Appeal">
+                <!-- Button trigger modal -->
+                <div class="d-flex justify-content-center align-items-center bg-secondary fixed-bottom p-1">
+                    <button type="button" class="btn btn-success  rounded-pill btn-sm" id="modelButtonExample" onclick="focusModel()">
+                        Опубликовать обращение
+                    </button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Заполните анкету</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!--  -->
+                                @await Html.PartialAsync("_GetInputs.cshtml")
+                                <div class="editor">
+                                </div>
+                                <!--  -->
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                <button onclick="updatingIdInput()" type="submit" class="btn btn-primary">Опубликовать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            @*
+        ███████╗░█████╗░██████╗░███╗░░░███╗
+        ██╔════╝██╔══██╗██╔══██╗████╗░████║
+        █████╗░░██║░░██║██████╔╝██╔████╔██║
+        ██╔══╝░░██║░░██║██╔══██╗██║╚██╔╝██║
+        ██║░░░░░╚█████╔╝██║░░██║██║░╚═╝░██║
+        ╚═╝░░░░░░╚════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝
+            *@
+            @if (itemsCount < 1)
+            {
+                <p class="display-1 text-uppercase text-danger text-center">Пусто</p>
+            }
+            @foreach (Appeal item in ViewBag.Appeals)
+            {
+
+
+                @await Html.PartialAsync("_GetAppeal.cshtml", item)
+            }
+        </div>
+    </div>
+</div>
+@await Html.PartialAsync("~/Views/Partials/_GetPagination.cshtml", pageCount)
+<!--  -->
+@await Html.PartialAsync("_GetScriptCKEditor.cshtml")
+

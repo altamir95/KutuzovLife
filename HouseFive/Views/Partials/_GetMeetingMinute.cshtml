@@ -1,0 +1,29 @@
+﻿@model HouseFive.Models.MeetingMinutes
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <form action="/MeetingMinute/List" method="post">
+            @Html.Hidden("Id", @Model.Id)
+            <div class="mb-3">
+                <label for="Title-@Model.Id" class="form-label">Дата</label>
+                <input type="date" class="form-control" id="Title-@Model.Id" name="Title" value="@string.Format("{0:yyyy-MM-dd}", Model.Title)" required>
+            </div>
+            <div class="mb-3">
+                <label for="Article-@Model.Id" class="form-label">Описание</label>
+                <textarea class="form-control" id="Article-@Model.Id" rows="5" name="Article" required>@Model.Article</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="DocURl-@Model.Id" class="form-label">Код встраивания документа</label>
+                <textarea class="form-control" id="DocURl-@Model.Id" rows="5" name="DocURl" required>@Model.DocURl</textarea>
+            </div>
+            <div class="d-grid gap-2 mt-2">
+                <input type="submit" class="btn btn-primary" value="Сохранить" />
+            </div> 
+        </form>
+    }
+    else
+    {
+        <p class="display-4 text-lg-center text-center text-sm-center text-md-start text-xl-start text-xll-start">@Model.Title.ToShortDateString()</p>
+        <p>@Model.Article</p>
+        <div class="doc-url-conteiner" id="@Model.Id">@Html.Raw(Model.DocURl)</div>
+    }

@@ -1,0 +1,52 @@
+﻿@model Appeal
+@{ string author = String.IsNullOrEmpty(Model.Author) ? "Анонимно" : Model.Author;
+    string crrentIdAccordion = $"flush-collapseOne{Model.Id}";
+    string crrentIdDiv = $"div{Model.Id}";
+}
+<div class="card my-4" id="@crrentIdDiv">
+    <div class="card-body shadow-lg">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            @if (Model.InitiativeAppeal != null)
+            {
+                <a class="btn btn-dark btn-sm  rounded-pill text-uppercase mb-2" aria-current="page" asp-controller="Initiative" asp-action="Item" asp-route-id="@Model.InitiativeAppeal.InitiativeId">удовлетворено &#10095;</a>
+            }
+            else
+            {
+                <button class="btn btn-dark btn-sm rounded-pill disabled text-uppercase mb-2">на рассмотрении</button>
+            }
+            <p class="text-end text-black-50">№@Model.Id</p>
+
+        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form asp-controller="Appeal" asp-action="Delete" method="post">
+                @Html.Hidden("Id", Model.Id)
+                <p class=" mt-0 d-grid gap-2    d-flex justify-content-end">
+                    <input type="submit" class="btn btn-danger rounded-pill" value="Удалить" />
+                </p>
+            </form>
+        }
+
+        <h5 class="card-title">@Model.Title</h5>
+        <h6 class="card-subtitle mb-2 text-muted">@author</h6>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+
+                <h2 class="accordion-header  " id="flush-headingOne">
+                    <button class="accordion-button collapsed ps-0 shadow-none bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#@crrentIdAccordion" aria-expanded="false" aria-controls="@crrentIdAccordion">
+                        Прочитать обращение
+                    </button>
+                </h2>
+                <div id="@crrentIdAccordion" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body ck-content">@Html.Raw(Model.Article)</div>
+                </div>
+
+            </div>
+        </div>
+        @*<a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a>*@
+    </div>
+</div>
