@@ -227,3 +227,6 @@ __pycache__/
 
 # Windows thumbnail cache files
 Thumbs.db
+HouseFive/appsettings.Development.json
+HouseFive/appsettings.json
+HouseFive/.config/dotnet-tools.json
